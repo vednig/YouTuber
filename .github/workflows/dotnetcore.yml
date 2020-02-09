@@ -38,8 +38,8 @@ jobs:
     - name: Generate EXE file
       run: |
         dotnet publish YouTuber.Console -r win-x86 -c Release -o ExePackages /p:PublishSingleFile=true /p:Version=${{ env.VERSION }}
-        mv .\ExePackages\YouTuber.Console.exe .\ExePackages\YouTuber-Downloader.exe
-        rm .\ExePackages\YouTuber.Console.pdb
+        mv ./ExePackages/YouTuber.Console.exe ./ExePackages/YouTuber-Downloader.exe
+        rm ./ExePackages/YouTuber.Console.pdb
     #- name: Release EXE file
     #  if: github.event.action == 'published'
     - name: Checkout code
