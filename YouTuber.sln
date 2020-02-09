@@ -7,7 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YouTuber", "YouTuber\YouTub
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YouTuber.Console", "YouTuber.Console\YouTuber.Console.csproj", "{1B10F25C-7991-428D-BB95-94F67DB3B5FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YouTuber.Test", "YouTuber.Test\YouTuber.Test.csproj", "{167C30CB-C02A-40B3-89DB-4546138AB1B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YouTuber.Test", "YouTuber.Test\YouTuber.Test.csproj", "{167C30CB-C02A-40B3-89DB-4546138AB1B7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2ADB32A2-1F62-4C66-97D9-AB1B634D5843}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\dotnetcore.yml = .github\workflows\dotnetcore.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

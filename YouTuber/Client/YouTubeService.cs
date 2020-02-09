@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
-using MediaToolkit;
+//using MediaToolkit;
 using VideoLibrary;
-using MediaToolkit.Model;
+//using MediaToolkit.Model;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
@@ -72,16 +72,16 @@ namespace YouTuber.Client
 
             File.WriteAllBytes(video.Result.FullName, video.Result.GetBytes());
 
-            var inputFile = new MediaFile { Filename = video.Result.FullName };
-            var outputFile = new MediaFile { Filename = $"{BaseFolder}\\{CleanFilename(video.Result.FullName)}.mp3" };
+            //var inputFile = new MediaFile { Filename = video.Result.FullName };
+            //var outputFile = new MediaFile { Filename = $"{BaseFolder}\\{CleanFilename(video.Result.FullName)}.mp3" };
 
-            using (var engine = new Engine())
-            {
-                engine.GetMetadata(inputFile);
-                engine.Convert(inputFile, outputFile);
-            }
+            //using (var engine = new Engine())
+            //{
+            //    engine.GetMetadata(inputFile);
+            //    engine.Convert(inputFile, outputFile);
+            //}
 
-            TryToDelete(inputFile.Filename);
+            //TryToDelete(inputFile.Filename);
             return
                 $"{CleanFilename(video.Result.FullName)} sound is ready and saved under {BaseFolder}";
         }

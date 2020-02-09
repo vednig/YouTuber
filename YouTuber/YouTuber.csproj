@@ -2,11 +2,33 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>2.0.0</Version>
+    <Description>Download youtube video or sound</Description>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <Copyright>2018</Copyright>
+    <PackageIcon>logo.png</PackageIcon>
+    <PackageIconUrl />
+    <RepositoryUrl>https://github.com/maythamfahmi/youtuber</RepositoryUrl>
+    <PackageTags>youtube, convert, download, video, audio, mp4, mp3</PackageTags>
+    <PackageProjectUrl>https://github.com/maythamfahmi/youtuber</PackageProjectUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediaToolkit" Version="1.1.0.1" />
+    <PackageReference Include="FFmpeg.AutoGen" Version="4.2.0" />
     <PackageReference Include="VideoLibrary" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\logo.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

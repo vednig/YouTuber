@@ -13,17 +13,16 @@ namespace YouTuber.Test
         private static readonly string FileContent = Properties.Resources.YoutubeList;
         private static readonly string RunningPath = AppDomain.CurrentDomain.BaseDirectory;
         private static readonly string FromFile =
-            Path.GetFullPath(Path.Combine(RunningPath, @"..\..\Resources\YoutubeList.txt"));
+            Path.GetFullPath(Path.Combine(RunningPath, @"..\..\..\Resources\YoutubeList.txt"));
 
         private static readonly YouTubeService YouTubeService = new YouTubeService();
+        [Obsolete]
         private const string ProtectedContent = "https://www.youtube.com/watch?v=oRdxUFDoQe0";
 
-        [Test]
+        [Ignore("With the new update protected content are download on own responsibility")]
         public void ProtectedContentTest()
         {
-            //YouTubeService.YoutubeToMp3(ProtectedContent).ShouldContain("properly copyright protected");
-            var x = YouTubeService.YoutubeToMp3(ProtectedContent);
-            Console.WriteLine(x);
+            YouTubeService.YoutubeToMp3(ProtectedContent).ShouldContain("properly copyright protected");
         }
 
         [Test]
