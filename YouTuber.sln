@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2036
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YouTuber", "YouTuber\YouTuber.csproj", "{F00862F0-545A-449F-99D3-545DE580514D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YouTuber", "YouTuber\YouTuber.csproj", "{DF99A172-6416-4C86-A059-121AA258B510}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YouTuber.Test", "YouTuber.Test\YouTuber.Test.csproj", "{4104E563-C495-46BD-9765-3B2DC3B027CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YouTuber.Console", "YouTuber.Console\YouTuber.Console.csproj", "{1B10F25C-7991-428D-BB95-94F67DB3B5FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YouTuber.Console", "YouTuber.Console\YouTuber.Console.csproj", "{8A862B03-45EE-47F7-AC91-08F56AC01A81}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YouTuber.Test", "YouTuber.Test\YouTuber.Test.csproj", "{167C30CB-C02A-40B3-89DB-4546138AB1B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,18 +15,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F00862F0-545A-449F-99D3-545DE580514D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F00862F0-545A-449F-99D3-545DE580514D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F00862F0-545A-449F-99D3-545DE580514D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F00862F0-545A-449F-99D3-545DE580514D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4104E563-C495-46BD-9765-3B2DC3B027CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4104E563-C495-46BD-9765-3B2DC3B027CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4104E563-C495-46BD-9765-3B2DC3B027CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4104E563-C495-46BD-9765-3B2DC3B027CF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8A862B03-45EE-47F7-AC91-08F56AC01A81}.Debug|Any CPU.ActiveCfg = Release|Any CPU
-		{8A862B03-45EE-47F7-AC91-08F56AC01A81}.Debug|Any CPU.Build.0 = Release|Any CPU
-		{8A862B03-45EE-47F7-AC91-08F56AC01A81}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8A862B03-45EE-47F7-AC91-08F56AC01A81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF99A172-6416-4C86-A059-121AA258B510}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF99A172-6416-4C86-A059-121AA258B510}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF99A172-6416-4C86-A059-121AA258B510}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF99A172-6416-4C86-A059-121AA258B510}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B10F25C-7991-428D-BB95-94F67DB3B5FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B10F25C-7991-428D-BB95-94F67DB3B5FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B10F25C-7991-428D-BB95-94F67DB3B5FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B10F25C-7991-428D-BB95-94F67DB3B5FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{167C30CB-C02A-40B3-89DB-4546138AB1B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{167C30CB-C02A-40B3-89DB-4546138AB1B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{167C30CB-C02A-40B3-89DB-4546138AB1B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{167C30CB-C02A-40B3-89DB-4546138AB1B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

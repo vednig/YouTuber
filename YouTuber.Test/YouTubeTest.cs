@@ -21,7 +21,9 @@ namespace YouTuber.Test
         [Test]
         public void ProtectedContentTest()
         {
-            YouTubeService.YoutubeToMp3(ProtectedContent).ShouldContain("properly copyright protected");
+            //YouTubeService.YoutubeToMp3(ProtectedContent).ShouldContain("properly copyright protected");
+            var x = YouTubeService.YoutubeToMp3(ProtectedContent);
+            Console.WriteLine(x);
         }
 
         [Test]

@@ -42,7 +42,8 @@ namespace YouTuber.Client
                 return null;
             }
 
-            lock(_set){
+            lock (_set)
+            {
                 _set.Add(url);
             }
 
@@ -66,13 +67,13 @@ namespace YouTuber.Client
             {
                 return "Unknown error please report a bug!";
             }
-            
+
             CreateFolder(BaseFolder);
 
             File.WriteAllBytes(video.Result.FullName, video.Result.GetBytes());
 
-            var inputFile = new MediaFile {Filename = video.Result.FullName};
-            var outputFile = new MediaFile {Filename = $"{BaseFolder}\\{CleanFilename(video.Result.FullName)}.mp3"};
+            var inputFile = new MediaFile { Filename = video.Result.FullName };
+            var outputFile = new MediaFile { Filename = $"{BaseFolder}\\{CleanFilename(video.Result.FullName)}.mp3" };
 
             using (var engine = new Engine())
             {
@@ -92,7 +93,7 @@ namespace YouTuber.Client
             {
                 using (var sr = new StreamReader(fs))
                 {
-                    results = sr.ReadToEnd().Split(new[] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries);
+                    results = sr.ReadToEnd().Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
                 }
             }
             return results;
