@@ -48,7 +48,7 @@ jobs:
       uses: svenstaro/upload-release-action@v1-release
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: /ExePackages
+        file: /ExePackages/YouTuber.Console.exe
         asset_name: YouTuber-Downloader
         tag: ${{ github.ref }}
         overwrite: true
