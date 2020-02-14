@@ -38,7 +38,7 @@ jobs:
     - name: Generate EXE file
       run: |
         dotnet publish YouTuber.Console -r win-x86 -c Release -o ExePackages /p:PublishSingleFile=true /p:Version=${{ env.VERSION }}
-        mv ./ExePackages/YouTuber.Console.exe ./ExePackages/YouTuber-Downloader.exe
+        mv ./ExePackages/YouTuber.Console.exe ./ExePackages/YouTuber.exe
         rm ./ExePackages/YouTuber.Console.pdb
     #- name: Release EXE file
     #  if: github.event.action == 'published'
@@ -48,9 +48,9 @@ jobs:
       uses: svenstaro/upload-release-action@v1-release
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: ./ExePackages/YouTuber-Downloader.exe
+        file: ./ExePackages/YouTuber.exe
         asset_name: YouTuber-Downloader
-        tag: ${{ github.ref }}
+        tag: v${{ env.VERSION }}
         overwrite: true
     #- name: Create Release
     #  id: create_release
@@ -64,10 +64,10 @@ jobs:
     #      YouTube Downloader v${{ env.VERSION }}
     #    draft: true
     #    prerelease: true
-    - name: Generate coverage report
-      run: |
-        cd ./YouTuber.Test/
-        dotnet test /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
+    #- name: Generate coverage report
+    #  run: |
+    #    cd ./YouTuber.Test/
+    #    dotnet test /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
     - name: Build NuGet Package
       run: dotnet pack ./YouTuber/YouTuber.csproj --configuration Release -o NuGetPackages /property:Version=${{ env.VERSION }}
     #- name: Deploy NuGet Package
