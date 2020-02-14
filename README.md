@@ -1,8 +1,7 @@
 ## YouTuber
-
 [
 ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/maythamfahmi/YouTuber/blob/master/LICENSE)
-![Build Status](https://github.com/maythamfahmi/YouTuber/workflows/.NET%20Core/badge.svg?branch=master) 
+![.NET Core](https://github.com/maythamfahmi/YouTuber/workflows/.NET%20Core/badge.svg)
 <!-- [![Build Status](https://travis-ci.org/maythamfahmi/YouTuber.svg?branch=master)](https://travis-ci.org/maythamfahmi/YouTuber) -->
 
 <a href="https://github.com/maythamfahmi/wet-extractor/blob/master/LICENSE">
