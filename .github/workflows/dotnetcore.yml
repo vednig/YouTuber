@@ -49,7 +49,7 @@ jobs:
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: ./ExePackages/YouTube.exe
-        asset_name: YouTube.exe
+        asset_name: YouTuber.exe
         tag: v${{ env.VERSION }}
         overwrite: true
     #- name: Create Release
