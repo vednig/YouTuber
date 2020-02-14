@@ -42,8 +42,8 @@ jobs:
         rm ./ExePackages/YouTuber.Console.pdb
     #- name: Release EXE file
     #  if: github.event.action == 'published'
-    - name: Checkout code
-      uses: actions/checkout@master
+    #- name: Checkout code
+    #  uses: actions/checkout@master
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v1-release
       with:
