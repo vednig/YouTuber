@@ -11,11 +11,9 @@
     <PackageIconUrl />
     <RepositoryUrl>https://github.com/maythamfahmi/youtuber</RepositoryUrl>
     <PackageTags>youtube, convert, download, video, audio, mp4, mp3</PackageTags>
+    <AssemblyName>YouTuber.Cl</AssemblyName>
+    <RootNamespace>YouTuber.Cl</RootNamespace>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Costura.Fody" Version="4.1.0" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\YouTuber\YouTuber.csproj" />

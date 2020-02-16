@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YouTuber", "YouTuber\YouTuber.csproj", "{DF99A172-6416-4C86-A059-121AA258B510}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YouTuber.Console", "YouTuber.Console\YouTuber.Console.csproj", "{1B10F25C-7991-428D-BB95-94F67DB3B5FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YouTuber.Cl", "YouTuber.Cl\YouTuber.Cl.csproj", "{1B10F25C-7991-428D-BB95-94F67DB3B5FB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YouTuber.Test", "YouTuber.Test\YouTuber.Test.csproj", "{167C30CB-C02A-40B3-89DB-4546138AB1B7}"
 EndProject
