@@ -1,30 +1,25 @@
 ﻿using System;
-using System.Data;
 using VideoLibrary;
+using System.Threading.Tasks;
 
-namespace YouTuber.Model
+namespace YouTuber
 {
-    public class YouTuberInfo
+    public class VideoDetails
     {
-        public string Id { get; set; }
-        public DateTime Created { get; set; }
+        public string Id { get; set; } = Guid.NewGuid().ToString();
+        public DateTime Created { get; set; } = DateTime.Now;
         public DateTime Done { get; set; }
         public Uri Link { get; set; }
-        public State State { get; set; }
-        public YouTubeVideo YouTubeVideo { get; set; }
-    }
-
-    public class State
-    {
         public StateType StateType { get; set; }
         public string Error { get; set; }
+        public Exception Ex { get; set; }
+        public Task<YouTubeVideo> Video { get; set; }
     }
-
+    
     public enum StateType
     {
         Success,
         Error,
-        Failed,
         Exception
     }
 }

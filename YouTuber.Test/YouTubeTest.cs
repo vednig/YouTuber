@@ -6,6 +6,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using NSubstitute;
 using YouTuber.Client;
+using YouTuber.Helper;
 using YouTuber.Service;
 
 namespace YouTuber.Test
@@ -24,7 +25,7 @@ namespace YouTuber.Test
         {
             var video = Client.GetVideoAsync(Sample);
             var result = video.Result;
-            result.Title.ShouldStartWith("I am basketball man, street performer");
+            result.Title.ShouldStartWith("McDonalds FUNNY AD - YouTube");
             result.GetBytes().ShouldNotBeEmpty();
         }
 
@@ -47,60 +48,49 @@ namespace YouTuber.Test
         }
 
         [Test]
+        public void PreventDuplicatesTest()
+        {
+            var uris = new List<Uri> { Sample, Sample, Sample };
+            var result = uris.Select(uri => Service.PreventDuplicates(new VideoDetails { Link = uri })).ToList();
+            result.Count.ShouldBe(uris.Count);
+            result.FirstOrDefault()?.StateType.ShouldBe(StateType.Success);
+            result.Skip(1).All(e => e.StateType == StateType.Error).ShouldBeTrue();
+        }
+
+        [Test]
         public void YouTuberWrongUriTest()
         {
             var service = Substitute.For<YouTuberService>();
             var uri = new Uri(Sample.AbsoluteUri.Substring(4));
-            //Service.Execute(uri);
-            service.Execute(uri);
-
-            //service.
-
-            var xz = service.ReceivedCalls();
-            service.Returns(e => e[0]);
-
-            //result.Title.ShouldStartWith("McDonalds FUNNY AD - YouTube");
-            //result.GetBytes().ShouldNotBeEmpty();
-            Console.WriteLine(xz.GetEnumerator());
+            var result = service.Execute(uri);
+            result.StateType.ShouldBe(StateType.Exception);
+            result.Error.ShouldBe($"DownloadFromYouTube exception: One or more errors occurred. (URL is not a valid YouTube URL!)");
         }
 
         [Test]
-        public void PreventDuplicatesTest()
+        public void YouTuberDownloadWrongIdTest()
         {
-            var uri = new List<Uri>
-            {
-                new Uri("http://local.domain.com"),
-                new Uri("http://local.domain.com"),
-                new Uri("http://local.domain.com"),
-                new Uri("http://local.domain.com"),
-                new Uri("http://local.domain.com")
-            };
-
-            var result = uri.Select(e => Service.PreventDuplicates(e)).ToList();
-
-            result.Count.ShouldBe(uri.Count);
-            result.FirstOrDefault().ShouldBeFalse();
-            result.Skip(1).All(e => e).ShouldBeTrue();
+            var unavailableVideo = new Uri("https://www.youtube.com/watch?v=FScfGUfrQaM");
+            var video = Service.Execute(unavailableVideo);
+            video.StateType.ShouldBe(StateType.Exception);
+            video.Error.ShouldBe("DownloadFromYouTube exception: One or more errors occurred. (Sequence contains no elements)");
+            video.Video.ShouldBeNull();
         }
 
+        // mock first to be true and the rest fails??
         [Test]
         public void DownloadFromYouTubePreventDuplicatesTest()
         {
-            var uri = new List<Uri>
-            {
-                new Uri("http://local.domain.com"),
-                new Uri("http://local.domain.com"),
-                new Uri("http://local.domain.com"),
-                new Uri("http://local.domain.com"),
-                new Uri("http://local.domain.com")
-            };
-
+            var badUri = new Uri("http://local.domain.com");
+            var uri = new List<Uri> { badUri, badUri, badUri, badUri };
             var result = Service.Execute(uri);
-
-            var enumerable = result as string[] ?? result.ToArray();
-            enumerable.Length.ShouldBe(1);
-            enumerable.FirstOrDefault().ShouldBe("Start downloading of: http://local.domain.com/ is fail with error message: One or more errors occurred. (URL is not a valid YouTube URL!)");
+            var enumerable = result.ToList();
+            enumerable.Count.ShouldBe(0);
         }
 
+        //PreventDuplicates(details);
+        //DownloadFromYouTube(details);
+        //Save(details);
+        //Done(details);
     }
 }

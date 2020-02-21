@@ -5,8 +5,8 @@ namespace YouTuber.Service
 {
     public interface IYouTuberService
     {
-        string Execute(Uri uri);
-        IEnumerable<string> Execute(IEnumerable<Uri> uris);
+        VideoDetails Execute(Uri uri);
+        IEnumerable<VideoDetails> Execute(IEnumerable<Uri> uris);
     }
 
 }

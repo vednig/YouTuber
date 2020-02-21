@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using VideoLibrary;
 using YouTuber.Client;
 using YouTuber.Helper;
 
@@ -22,92 +20,135 @@ namespace YouTuber.Service
             CreateFolder(BaseFolder);
         }
 
-        //, bool extractMp3 = false
+        //bool extractMp3 = false
 
-        public string Execute(Uri uri)
+        public VideoDetails Execute(Uri uri)
         {
-            if (PreventDuplicates(uri))
+            var details = new VideoDetails
             {
-                return string.Empty;
-            }
-            var sb = new StringBuilder();
-            var download = DownloadFromYouTube(uri);
-            sb.Append(download);
-            //var save = Save(uri)
-            return sb.ToString();
+                Link = uri,
+                StateType = StateType.Success
+            };
+
+            PreventDuplicates(details);
+            DownloadFromYouTube(details);
+            Save(details);
+            Done(details);
+
+            return details;
         }
 
         /// <summary>
-        /// Take only the first uri if duplicates found
+        /// Take only the first details if duplicates found
         /// </summary>
-        /// <param name="uri"></param>
         /// <returns></returns>
-        public bool PreventDuplicates(Uri uri)
+        public VideoDetails PreventDuplicates(VideoDetails details)
         {
             lock (_set)
             {
-                if (_set.Contains(uri))
+                if (_set.Contains(details.Link))
                 {
-                    return true;
+                    details.StateType = StateType.Error;
+                    details.Error = $"Duplicated {details.Link}";
+                    return details;
                 }
-                _set.Add(uri);
+                _set.Add(details.Link);
             }
 
-            return false;
+            return details;
         }
 
         /// <summary>
-        /// 
+        /// Time stamp when done successfully
         /// </summary>
-        /// <param name="uri"></param>
+        /// <param name="details"></param>
         /// <returns></returns>
-        public string DownloadFromYouTube(Uri uri)
+        public VideoDetails Done(VideoDetails details)
         {
-            string status;
+            if (details.StateType != StateType.Success)
+            {
+                return details;
+            }
 
-            var video = _client.GetVideoAsync(uri);
+            details.Done = DateTime.Now;
+            return details;
+        }
+
+        /// <summary>
+        /// Download content from Youtube
+        /// </summary>
+        /// <param name="details"></param>
+        /// <returns></returns>
+        public VideoDetails DownloadFromYouTube(VideoDetails details)
+        {
+            if (details.StateType != StateType.Success)
+            {
+                return details;
+            }
+
+            var video = _client.GetVideoAsync(details.Link);
 
             try
             {
-                var getResultUri = video.Result.Uri;
-                status = $"{getResultUri} Downloaded";
+                var s = video.Result.Uri;
+                if (string.IsNullOrWhiteSpace(s))
+                {
+                    details.StateType = StateType.Error;
+                    details.Error = $"{Helpers.GetCurrentMethod()} error";
+                }
+                else
+                {
+                    details.Video = video;
+                }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                status = $"{uri} got error message: {e.Message}";
+                details.Ex = ex;
+                details.StateType = StateType.Exception;
+                details.Error = $"{Helpers.GetCurrentMethod()} exception: {ex.Message}";
             }
-            
-            return status;
+
+            return details;
         }
 
-        public string Save(Task<YouTubeVideo> video)
+        /// <summary>
+        /// Save video to disk
+        /// </summary>
+        /// <param name="details"></param>
+        /// <returns></returns>
+        public VideoDetails Save(VideoDetails details)
         {
-            string status;
-            var path = $"./{BaseFolder}/{video.Result.FullName}";
+            if (details.StateType != StateType.Success)
+            {
+                return details;
+            }
+
+            var path = $"./{BaseFolder}/{details.Video.Result.FullName}";
 
             try
             {
-                File.WriteAllBytes(path, video.Result.GetBytes());
-                status = $"{path} Saved";
+                File.WriteAllBytes(path, details.Video.Result.GetBytes());
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                status = $"{path} got error message: {e.Message}";
+                details.Ex = ex;
+                details.StateType = StateType.Exception;
+                details.Error = $"Save exception: {ex.Message}";
             }
 
-            return status;
+            return details;
         }
 
-        public IEnumerable<string> Execute(IEnumerable<Uri> uris)
+        public IEnumerable<VideoDetails> Execute(IEnumerable<Uri> uris)
         {
             var options = new ParallelOptions();
-            var results = new List<string>();
+            var results = new List<VideoDetails>();
             var maxProc = Environment.ProcessorCount;
             options.MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling(maxProc * 1.75));
             Parallel.ForEach(uris, options, e =>
             {
                 var status = Execute(e);
-                if (!string.IsNullOrWhiteSpace(status))
+                if (status.StateType == StateType.Success)
                 {
                     results.Add(status);
                 }
