@@ -10,14 +10,14 @@ namespace YouTuber.Service
 {
     public class YouTuberService : IYouTuberService
     {
-        private const string BaseFolder = "downloads";
+
         private readonly HashSet<Uri> _set = new HashSet<Uri>();
         private readonly IYouTuberClient _client;
 
-        public YouTuberService()
+        public YouTuberService(string baseFolder = null)
         {
             _client = new YouTuberClient();
-            CreateFolder(BaseFolder);
+            CreateFolder(string.IsNullOrWhiteSpace(baseFolder) ? AppSetting.BaseFolder : baseFolder);
         }
 
         //bool extractMp3 = false
@@ -123,7 +123,7 @@ namespace YouTuber.Service
                 return details;
             }
 
-            var path = $"./{BaseFolder}/{details.Video.Result.FullName}";
+            var path = $"./{AppSetting.BaseFolder}/{details.Video.Result.FullName}";
 
             try
             {
@@ -158,8 +158,8 @@ namespace YouTuber.Service
 
         private static Uri ValidateYoutubeLink(string id)
         {
-            if (id.IsValidId())
-                return id.GetUnifiedUri();
+            if (id.IsIdLengthValid())
+                return id.CreateUri();
 
             throw new Exception("Some thing is wrong with your video id");
         }

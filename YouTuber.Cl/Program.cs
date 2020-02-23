@@ -14,6 +14,7 @@ namespace YouTuber.Cl
         //Sample download
         private static readonly IEnumerable<Uri> SampleVideos = new List<Uri>
         {
+           new Uri("https://www.youtube.com/watch?v=Kv3RfdHZ25c"),
            new Uri("https://www.youtube.com/watch?v=y9ajRIgTJNA"),
            new Uri("https://www.youtube.com/watch?v=dE40z4fODQA")
         };

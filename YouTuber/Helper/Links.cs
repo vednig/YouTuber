@@ -9,25 +9,49 @@ namespace YouTuber.Helper
         private const string ShortUrl = "https://youtu.be";
         private const string ImageUrl = "https://img.youtube.com";
 
-        public static Uri GetUnifiedUri(this string id)
+        /// <summary>
+        /// Create standard youtube uri
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static Uri CreateUri(this string id)
         {
             return new Uri($"{BaseUrl}/watch?v={id}");
         }
 
-        public static Uri GetShortenUri(this string id)
+        /// <summary>
+        /// Create shorten version of youtube uri
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static Uri CreateShortenUri(this string id)
         {
             return new Uri($"{ShortUrl}/{id}");
         }
 
+        /// <summary>
+        /// Get video details as json from youtube
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public static Uri GetVideoDetailsUri(this string id)
         {
             return new Uri($"{BaseUrl}/oembed?url=http%3A//www.youtube.com/watch?v%3D{id}&format=json");
         }
 
-        public static bool IsValidId(this string id)
+        /// <summary>
+        /// Check if id contains exact 11 characters
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static bool IsIdLengthValid(this string id)
         {
             return id.Length == 11;
         }
+
+        //public static bool 
+        //test online as well with json
+
 
         public static Uri GetVideoThumbnailUri(this string id, ImageSize imageSize)
         {
@@ -88,13 +112,9 @@ namespace YouTuber.Helper
         [Description("hq-480x360")]
         HighQuality,
         [Description("sd-640x480")]
-        StandardDefinition ,
+        StandardDefinition,
         [Description("hd-1920x1080")]
         MaximumResolution,
     }
-
-    //return new Uri("https://img.youtube.com/vi/{id}/0.jpg");
-    //return new Uri("https://img.youtube.com/vi/{id}/1.jpg");
-    //return new Uri("https://img.youtube.com/vi/{id}/2.jpg");
 
 }

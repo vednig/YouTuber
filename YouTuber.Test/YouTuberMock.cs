@@ -1,62 +1,72 @@
-﻿//using System;
-//using Shouldly;
-//using NSubstitute;
-//using NUnit.Framework;
-//using YouTuber.Client;
-//using System.Collections.Generic;
+﻿using System;
+using Shouldly;
+using NSubstitute;
+using NUnit.Framework;
+using System.Collections.Generic;
+using System.Linq;
+using YouTuber.Helper;
+using YouTuber.Service;
 
-//namespace YouTuber.Test
-//{
-//    public class YouTuberMock
-//    {
-//        [Test]
-//        public void YoutubeToMp3Calls()
-//        {
-//            var youTubeClient = Substitute.For<IYouTuberClient>();
-//            List<string> dummyUrls = new List<string>() { "", "" };
+namespace YouTuber.Test
+{
+    public class YouTuberMock
+    {
+        private static readonly Uri Sample = AppSetting.SampleId.CreateUri();
 
-//            var counter = 0;
-//            youTubeClient.When(e => e.YoutubeToMp3(Arg.Any<List<string>>()))
-//                .Do(e => counter++);
+        [Test]
+        public void YouTuberStressCalls()
+        {
+            var service = Substitute.For<IYouTuberService>();
+            IEnumerable<Uri> dummyUrls = new List<Uri> { Sample, Sample };
 
-//            youTubeClient.YoutubeToMp3(dummyUrls);
-//            youTubeClient.YoutubeToMp3(dummyUrls);
-//            youTubeClient.YoutubeToMp3(dummyUrls);
-//            counter.ShouldBe(3);
-//        }
+            var counter = 0;
+            service.When(e => e.Execute(Arg.Any<List<Uri>>()))
+                .Do(e => counter++);
 
-//        [Test]
-//        public void YoutubeToMp3Exception()
-//        {
-//            var youTubeClient = Substitute.For<IYouTuberClient>();
-//            youTubeClient
-//                .When(x => x.YoutubeToMp3(""))
-//                .Do(x => throw new Exception());
+            for (int i = 0; i < 10000; i++)
+            {
+                service.Execute(dummyUrls);
+            }
 
-//            Action action1 = () => youTubeClient.YoutubeToMp3("");
-//            action1.ShouldThrow<Exception>();
-//        }
+            counter.ShouldBe(10000);
+        }
 
-//        [Test]
-//        public void FileToListMock()
-//        {
-//            var youTubeClient = Substitute.For<IYouTuberClient>();
-//            youTubeClient.FileToList(Arg.Any<string>()).Returns(new List<string> { "1", "2" });
+        [Test]
+        public void YouTuberExceptionThrownTest()
+        {
+            var service = Substitute.For<IYouTuberService>();
 
-//            youTubeClient.FileToList("").ShouldContain(e => e.Contains("1"));
-//            youTubeClient.FileToList("").ShouldContain(e => e.Contains("2"));
-//        }
+            service
+                .When(x => x.Execute(Arg.Any<Uri>()))
+                .Do(x => throw new Exception("This is an exception message"));
 
-//        [Test]
-//        public void FileToListFileMock()
-//        {
-//            var reader = Substitute.For<YouTuberClient>();
-//            reader.When(x => x.FileToList("youtubelist.txt")).DoNotCallBase();
-//            reader.FileToList("youtubelist.txt")
-//                .Returns(new List<string>() { "1", "2", "3" }
-//                );
+            var uri = new Uri("http://local.domain.com");
+            Action action = () => service.Execute(uri);
+            action.ShouldThrow<Exception>().Message.ShouldStartWith("This is an exception message");
+        }
 
-//            reader.YoutubeToMp3(reader.FileToList("youtubelist.txt"));
-//        }
-//    }
-//}
+        [Test]
+        public void FileToListMock()
+        {
+            var service = Substitute.For<YouTuberService>("test");
+            service.FileToList(Arg.Any<string>()).Returns(new List<Uri> { Sample, Sample });
+
+            service.FileToList("").ShouldContain(e => e.AbsoluteUri.Contains(Sample.AbsoluteUri));
+        }
+
+        [Test]
+        public void FileToListFileMock()
+        {
+            var service = Substitute.For<YouTuberService>("test");
+            service.When(x => x.FileToList("youtubelist.txt")).DoNotCallBase();
+            service.FileToList("youtubelist.txt")
+                .Returns(new List<Uri>() { Sample, Sample, Sample }
+                );
+
+            var fileToList = service.FileToList("youtubelist.txt");
+            var all = fileToList.ToList().All(e => e == Sample);
+            all.ShouldBeTrue();
+        }
+    }
+
+}
